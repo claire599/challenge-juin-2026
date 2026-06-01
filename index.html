@@ -605,7 +605,7 @@ function renderPitch(){
   var svg='';
   /* defs : pelouse + clips France */
   svg+='<defs><pattern id="grass" width="140" height="420" patternUnits="userSpaceOnUse"><rect width="70" height="420" fill="#1f7a44"/><rect x="70" width="70" height="420" fill="#1c6f3e"/></pattern>';
-  for(var k=0;k<MATCHS_BLEUS.length;k++){var pi=POS[MATCHS_BLEUS[k].idx];svg+='<clipPath id="frc'+MATCHS_BLEUS[k].idx+'"><rect x="'+(pi.x-23)+'" y="'+(pi.y-21)+'" width="46" height="42" rx="7"/></clipPath>';}
+  for(var k=0;k<MATCHS_BLEUS.length;k++){var pi=POS[MATCHS_BLEUS[k].idx];svg+='<clipPath id="frc'+MATCHS_BLEUS[k].idx+'"><rect x="'+(pi.x-25)+'" y="'+(pi.y-28)+'" width="50" height="56" rx="8"/></clipPath>';}
   svg+='</defs>';
   svg+='<rect x="0" y="0" width="600" height="420" fill="url(#grass)"/>';
   svg+='<g fill="none" stroke="#fff" stroke-width="3" opacity="0.85"><rect x="20" y="20" width="560" height="380" rx="3"/><line x1="300" y1="20" x2="300" y2="400"/><circle cx="300" cy="210" r="46"/><rect x="20" y="120" width="70" height="180"/><rect x="20" y="165" width="28" height="90"/><rect x="510" y="120" width="70" height="180"/><rect x="552" y="165" width="28" height="90"/></g>';
@@ -620,7 +620,7 @@ function renderPitch(){
   svg+='</g>';
   /* ballon aujourd'hui */
   var pt=POS[ti];
-  svg+='<g class="ball-today"><text x="'+pt.x+'" y="'+(pt.y-28)+'" text-anchor="middle" font-size="22" filter="drop-shadow(0 3px 4px rgba(0,0,0,0.45))">⚽</text></g>';
+  svg+='<g class="ball-today"><text x="'+pt.x+'" y="'+(pt.y-34)+'" text-anchor="middle" font-size="22" filter="drop-shadow(0 3px 4px rgba(0,0,0,0.45))">⚽</text></g>';
   document.getElementById('pitch').innerHTML=svg;
   /* clics */
   var nodes=document.querySelectorAll('#pitch .case-clickable');
@@ -628,37 +628,47 @@ function renderPitch(){
 }
 
 function caseSVG(i,ti){
-  var p=POS[i],x=p.x-23,y=p.y-21,cx=p.x,a=assess(i),s=S.sal[i],d=new Date(YEAR,MONTH,i+1),dow=DAYS[d.getDay()];
-  var dowY=p.y-7,numY=p.y+8,scY=p.y+17,fm=franceMatch(i);
+  var p=POS[i],cx=p.x,cy=p.y,x=cx-25,y=cy-28,a=assess(i),s=S.sal[i],d=new Date(YEAR,MONTH,i+1),dow=DAYS[d.getDay()],fm=franceMatch(i);
   var g='<g class="case-clickable" data-i="'+i+'">';
+  /* pastille report (coin haut-gauche) si report > 0 */
+  function repPill(col){return a.r>0?'<rect x="'+(x+2)+'" y="'+(y+2)+'" width="20" height="11" rx="5.5" fill="'+(col||'#f9ca24')+'"/><text x="'+(x+12)+'" y="'+(y+10.5)+'" font-size="7" fill="#0e2a18" font-weight="900">☀'+a.r+'</text>':'';}
+
   if(fm>=0){ /* JOUR FRANCE — tricolore */
-    var b=x,w=15.33;var won=S.bonsBleus[fm];
-    g+='<g clip-path="url(#frc'+i+')"><rect x="'+b+'" y="'+y+'" width="'+w+'" height="42" fill="#0055a4"/><rect x="'+(b+w)+'" y="'+y+'" width="'+w+'" height="42" fill="#fff"/><rect x="'+(b+2*w)+'" y="'+y+'" width="'+(w+0.02)+'" height="42" fill="#ef4135"/></g>';
-    g+='<rect x="'+x+'" y="'+y+'" width="46" height="42" rx="7" fill="none" stroke="#fff" stroke-width="2"/>';
-    g+='<text x="'+cx+'" y="'+(p.y-9)+'" font-size="9">🇫🇷</text>';
-    g+='<text x="'+cx+'" y="'+(p.y+5)+'" font-family="Audiowide" font-size="13" fill="#0e2a18">'+(i+1)+'</text>';
-    g+='<text x="'+cx+'" y="'+(p.y+17)+'" font-size="9">'+(won?MATCHS_BLEUS[fm].icon:'🎁')+'</text>';
+    var b=x,w=16.66,won=S.bonsBleus[fm];
+    g+='<g clip-path="url(#frc'+i+')"><rect x="'+b+'" y="'+y+'" width="'+w+'" height="56" fill="#0055a4"/><rect x="'+(b+w)+'" y="'+y+'" width="'+w+'" height="56" fill="#fff"/><rect x="'+(b+2*w)+'" y="'+y+'" width="'+(w+0.02)+'" height="56" fill="#ef4135"/></g>';
+    g+='<rect x="'+x+'" y="'+y+'" width="50" height="56" rx="8" fill="none" stroke="#fff" stroke-width="2"/>';
+    g+='<text x="'+cx+'" y="'+(cy-15)+'" font-size="9">🇫🇷</text>';
+    g+='<text x="'+cx+'" y="'+(cy-1)+'" font-family="Audiowide" font-size="14" fill="#0e2a18">'+(i+1)+'</text>';
+    if(a.o>0)g+='<text x="'+cx+'" y="'+(cy+11)+'" font-size="7" fill="#0e2a18" font-weight="800">🎯'+a.o+'</text>';
+    g+='<text x="'+cx+'" y="'+(cy+23)+'" font-size="11">'+(won?MATCHS_BLEUS[fm].icon:'🎁')+'</text>';
     return g+'</g>';
   }
-  var fill,res='',badge='',dowFill='#fff',numFill='#fff',numOp='1';
+
   if(i===ti){ /* aujourd'hui */
-    g+='<rect x="'+x+'" y="'+y+'" width="46" height="42" rx="7" fill="#0c2c1a"/>';
-    g+='<rect class="today-ring" x="'+x+'" y="'+y+'" width="46" height="42" rx="7" fill="none" stroke="#f9ca24" stroke-width="2.5"/>';
-    g+='<text x="'+cx+'" y="'+(p.y-9)+'" font-size="7" fill="#f9ca24" font-weight="900">'+dow.toUpperCase()+'</text>';
-    g+='<text x="'+cx+'" y="'+(p.y+5)+'" font-family="Audiowide" font-size="14" fill="#fff">'+(i+1)+'</text>';
-    g+='<text x="'+cx+'" y="'+(p.y+17)+'" font-size="6.5" fill="#f9ca24" font-weight="900">EN COURS</text>';
+    g+='<rect x="'+x+'" y="'+y+'" width="50" height="56" rx="8" fill="#0c2c1a"/>';
+    g+='<rect class="today-ring" x="'+x+'" y="'+y+'" width="50" height="56" rx="8" fill="none" stroke="#f9ca24" stroke-width="2.5"/>';
+    g+='<text x="'+cx+'" y="'+(cy-16)+'" font-size="7" fill="#f9ca24" font-weight="900">'+dow.toUpperCase()+'</text>';
+    g+='<text x="'+cx+'" y="'+(cy-2)+'" font-family="Audiowide" font-size="15" fill="#fff">'+(i+1)+'</text>';
+    if(a.o>0)g+='<text x="'+cx+'" y="'+(cy+10)+'" font-size="7" fill="#f9ca24" font-weight="800">🎯'+a.o+'</text>';
+    if(s!==null)g+='<text x="'+cx+'" y="'+(cy+22)+'" font-family="Audiowide" font-size="8" fill="#3ee08a">'+a.cumul+(a.o>0?'/'+a.o:'')+'</text>';
+    else g+='<text x="'+cx+'" y="'+(cy+22)+'" font-size="6.5" fill="#f9ca24" font-weight="900">EN COURS</text>';
+    g+=repPill('#f9ca24');
     return g+'</g>';
   }
-  if(!WORKED[i]){fill='#16482a';dowFill='#bfe6cd';numFill='#fff';numOp='.5';}
-  else if(i>ti||s===null){fill='#cfe9d8';dowFill='#0e2a18';numFill='#0e2a18';numOp='.7';dowFill='#0e2a18';}
-  else if(a.boostOk){fill='#27ae60';res=a.s+' ⚡';}
-  else{fill='#d4a017';res=a.s+' 🟨';}
-  var dowExtra=(!WORKED[i])?'':'';
-  g+='<rect x="'+x+'" y="'+y+'" width="46" height="42" rx="7" fill="'+fill+'"'+(i===29?' stroke="#f0932b" stroke-width="2"':'')+'/>';
-  g+='<text x="'+cx+'" y="'+(p.y-9)+'" font-size="7" fill="'+dowFill+'"'+(WORKED[i]&&s!==null?'':' opacity="'+(WORKED[i]?'.6':'1')+'"')+'>'+dow.toUpperCase()+'</text>';
-  g+='<text x="'+cx+'" y="'+(p.y+ (i===29?3:(res?5:6)) )+'" font-family="Audiowide" font-size="13" fill="'+numFill+'" opacity="'+numOp+'">'+(i+1)+'</text>';
-  if(res)g+='<text x="'+cx+'" y="'+(p.y+17)+'" font-size="7.5" fill="#fff">'+res+'</text>';
-  if(i===29)g+='<text x="'+cx+'" y="'+(p.y+15)+'" font-size="7" fill="#0e2a18" font-weight="900">🏆 FIN</text>';
+
+  var fill,dowFill,numFill='#fff',numOp='1',resCol='#fff',res='';
+  if(!WORKED[i]){fill='#16482a';dowFill='#bfe6cd';numOp='.5';}
+  else if(i>ti||s===null){fill='#cfe9d8';dowFill='#0e2a18';numFill='#0e2a18';numOp='.7';}
+  else if(a.boostOk){fill='#27ae60';dowFill='#fff';res=a.cumul+(a.o>0?'/'+a.o:'')+' ⚡';}
+  else{fill='#d4a017';dowFill='#fff';res=a.cumul+(a.o>0?'/'+a.o:'')+' 🟨';}
+
+  g+='<rect x="'+x+'" y="'+y+'" width="50" height="56" rx="8" fill="'+fill+'"'+(i===29?' stroke="#f0932b" stroke-width="2"':'')+'/>';
+  g+='<text x="'+cx+'" y="'+(cy-15)+'" font-size="7" fill="'+dowFill+'" opacity="'+(WORKED[i]?'.9':'1')+'">'+dow.toUpperCase()+'</text>';
+  g+='<text x="'+cx+'" y="'+(cy-1)+'" font-family="Audiowide" font-size="14" fill="'+numFill+'" opacity="'+numOp+'">'+(i+1)+'</text>';
+  if(WORKED[i]&&a.o>0)g+='<text x="'+cx+'" y="'+(cy+11)+'" font-size="7" fill="'+(s!==null?'#fff':'#0e2a18')+'" font-weight="800" opacity="'+(s!==null?'.95':'.7')+'">🎯'+a.o+'</text>';
+  if(res)g+='<text x="'+cx+'" y="'+(cy+23)+'" font-family="Audiowide" font-size="8" fill="'+resCol+'">'+res+'</text>';
+  if(i===29)g+='<text x="'+cx+'" y="'+(cy+23)+'" font-size="7" fill="#0e2a18" font-weight="900">🏆 FIN</text>';
+  g+=repPill('#f9ca24');
   return g+'</g>';
 }
 
