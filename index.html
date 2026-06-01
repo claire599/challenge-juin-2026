@@ -631,7 +631,7 @@ function caseSVG(i,ti){
   var p=POS[i],cx=p.x,cy=p.y,x=cx-25,y=cy-28,a=assess(i),s=S.sal[i],d=new Date(YEAR,MONTH,i+1),dow=DAYS[d.getDay()],fm=franceMatch(i);
   var g='<g class="case-clickable" data-i="'+i+'">';
   /* pastille report (coin haut-gauche) si report > 0 */
-  function repPill(col){return a.r>0?'<rect x="'+(x+2)+'" y="'+(y+2)+'" width="20" height="11" rx="5.5" fill="'+(col||'#f9ca24')+'"/><text x="'+(x+12)+'" y="'+(y+10.5)+'" font-size="7" fill="#0e2a18" font-weight="900">☀'+a.r+'</text>':'';}
+  function repPill(col){return a.r>0?'<rect x="'+(x+28)+'" y="'+(y+2)+'" width="20" height="11" rx="5.5" fill="'+(col||'#f9ca24')+'"/><text x="'+(x+38)+'" y="'+(y+10.5)+'" font-size="7" fill="#0e2a18" font-weight="900">☀'+a.r+'</text>':'';}
 
   if(fm>=0){ /* JOUR FRANCE — tricolore */
     var b=x,w=16.66,won=S.bonsBleus[fm];
