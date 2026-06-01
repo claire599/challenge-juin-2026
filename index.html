@@ -16,7 +16,11 @@ h1 .accent{color:#0d6e3c}
 .subtitle{text-align:center;font-size:.82rem;color:#5a7a66;margin-bottom:6px;font-weight:600}
 .sync-bar{text-align:center;font-size:.7rem;color:#00915a;margin-bottom:14px;min-height:14px;font-weight:700}
 
-.cockpit-outer{background:#fff;border-radius:22px;box-shadow:0 12px 40px rgba(0,0,0,.10);padding:14px;margin-bottom:14px;border:1px solid rgba(0,0,0,.05);overflow:hidden}
+.cockpit-outer{background:#fff;border-radius:22px;box-shadow:0 12px 40px rgba(0,0,0,.10);padding:14px;margin-bottom:14px;border:1px solid rgba(0,0,0,.05);overflow:hidden;position:relative;z-index:1}
+.live-wrap{position:relative}
+.studio{position:relative;z-index:2;width:min(340px,94%);margin:0 auto 12px;background:#fff;border:3px solid #14502f;border-radius:18px;padding:8px 8px 4px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.studio::after{content:"";position:absolute;left:50%;bottom:-12px;transform:translateX(-50%);border-left:12px solid transparent;border-right:12px solid transparent;border-top:13px solid #14502f}
+.studio svg{display:block;width:100%;height:auto;border-radius:10px}
 .cockpit-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:10px;border-bottom:1px dashed rgba(0,0,0,.1);flex-wrap:wrap;gap:6px}
 .cockpit-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:#0e2a18}
 .cockpit-date{font-size:.8rem;font-weight:700;color:#5a7a66}
@@ -89,6 +93,8 @@ h1 .accent{color:#0d6e3c}
 .match-card.won{background:linear-gradient(135deg,#eaf4ff,#fff);border-color:#27ae60}
 .match-card .mc-flag{font-size:1.1rem;line-height:1}
 .match-card .mc-date{font-family:'Audiowide',sans-serif;font-size:.92rem;color:#0055a4;margin-top:3px}
+.match-card .mc-adv{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.8px;color:#0e2a18;margin-top:2px}
+.match-card .mc-lieu{font-size:.6rem;font-weight:700;color:#5a7a66;margin-top:1px}
 .match-card .mc-label{font-size:.58rem;font-weight:700;color:#5a7a66;text-transform:uppercase;letter-spacing:.4px;margin:4px 0 7px}
 .match-card .mc-gift{font-size:.72rem;font-weight:800;color:#0e2a18;line-height:1.25}
 .match-card .mc-gift .pi{font-size:1.7rem;display:block;margin-bottom:3px}
@@ -178,6 +184,7 @@ h1 .accent{color:#0d6e3c}
   .sync-bar{font-size:.95rem;margin-bottom:22px}
 
   .cockpit-outer{padding:24px;border-radius:28px;margin-bottom:22px}
+  .studio{width:440px;margin:0 auto 16px;padding:10px 10px 6px}
   .cockpit-title{font-size:2rem;letter-spacing:3px}
   .cockpit-date{font-size:1.1rem}
 
@@ -231,6 +238,8 @@ h1 .accent{color:#0d6e3c}
   .match-card{padding:20px 16px;border-radius:18px}
   .match-card .mc-flag{font-size:1.6rem}
   .match-card .mc-date{font-size:1.5rem}
+  .match-card .mc-adv{font-size:1.4rem;letter-spacing:1px}
+  .match-card .mc-lieu{font-size:.82rem}
   .match-card .mc-label{font-size:.78rem}
   .match-card .mc-gift{font-size:1rem}
   .match-card .mc-gift .pi{font-size:3rem}
@@ -266,6 +275,59 @@ h1 .accent{color:#0d6e3c}
   <div class="sync-bar" id="syncBar">⏳ Connexion…</div>
 
   <!-- BLOC PRINCIPAL -->
+  <div class="live-wrap">
+  <div class="studio" aria-hidden="true">
+    <svg viewBox="12 17 356 132" xmlns="http://www.w3.org/2000/svg">
+      <rect x="14" y="20" width="352" height="128" rx="14" fill="#0c2c1a" stroke="#14502f" stroke-width="3"/>
+      <rect x="14" y="20" width="352" height="26" rx="14" fill="#06160d"/>
+      <text x="34" y="38" font-family="Bebas Neue, sans-serif" font-size="15" letter-spacing="2" fill="#bfe6cd">🎙️ STUDIO · LE GRAND MATCH</text>
+      <rect x="300" y="26" width="54" height="15" rx="7.5" fill="#d63031"/>
+      <circle cx="310" cy="33.5" r="3" fill="#fff"><animate attributeName="opacity" values="1;.2;1" dur="1.1s" repeatCount="indefinite"/></circle>
+      <text x="318" y="38" font-family="Outfit, sans-serif" font-weight="800" font-size="8.5" fill="#fff">ON AIR</text>
+      <!-- THIERRY -->
+      <g>
+        <path d="M70 150 q0 -34 38 -34 q38 0 38 34 Z" fill="#22324a"/>
+        <path d="M96 124 h24 v14 h-24 Z" fill="#e9eef5"/><path d="M108 124 l-7 14 7 6 7 -6 Z" fill="#c0392b"/>
+        <rect x="101" y="98" width="14" height="18" rx="5" fill="#e8b48c"/>
+        <circle cx="108" cy="86" r="22" fill="#f0c19b"/>
+        <!-- cheveux gris peignés sur le côté (façon Thierry Roland) -->
+        <path d="M86 88 q-2 -30 22 -30 q24 0 22 30 q-4 -15 -16 -16 q6 5 4 11 q-9 -11 -23 -7 q-7 3 -9 12 Z" fill="#cfd3d8"/>
+        <path d="M88 72 q16 -9 32 -2 q-14 -3 -24 3 q12 0 18 3 q-16 -1 -26 5 Z" fill="#cfd3d8"/>
+        <circle cx="100" cy="86" r="2.2" fill="#3a2a1a"/><circle cx="116" cy="86" r="2.2" fill="#3a2a1a"/>
+        <!-- lunettes de Thierry Roland -->
+        <circle cx="100" cy="86" r="6.5" fill="none" stroke="#0e2a18" stroke-width="2"/>
+        <circle cx="116" cy="86" r="6.5" fill="none" stroke="#0e2a18" stroke-width="2"/>
+        <line x1="106.5" y1="86" x2="109.5" y2="86" stroke="#0e2a18" stroke-width="2"/>
+        <path d="M101 96 q7 6 14 0" stroke="#9c5a3c" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M85 86 a23 23 0 0 1 46 0" stroke="#0e2a18" stroke-width="5" fill="none"/>
+        <rect x="82" y="83" width="9" height="14" rx="4" fill="#0e2a18"/>
+        <path d="M86 92 q-12 6 -10 18" stroke="#0e2a18" stroke-width="3" fill="none"/>
+        <circle cx="76" cy="110" r="5" fill="#d63031"/>
+        <rect x="74" y="128" width="68" height="14" rx="7" fill="#f9ca24"/>
+        <text x="108" y="138" text-anchor="middle" font-family="Bebas Neue, sans-serif" font-size="11" letter-spacing="1" fill="#0e2a18">THIERRY</text>
+      </g>
+      <!-- JEAN-MICHEL -->
+      <g>
+        <path d="M234 150 q0 -34 38 -34 q38 0 38 34 Z" fill="#2a4036"/>
+        <path d="M260 124 h24 v14 h-24 Z" fill="#e9eef5"/><path d="M272 124 l-7 14 7 6 7 -6 Z" fill="#2c3e50"/>
+        <rect x="265" y="98" width="14" height="18" rx="5" fill="#e3a979"/>
+        <circle cx="272" cy="86" r="22" fill="#edb487"/>
+        <!-- chevelure brune fournie avec mèche sur le côté (façon Larqué) -->
+        <path d="M249 90 q-2 -30 23 -30 q25 0 23 30 q-5 -14 -14 -16 q4 6 2 12 q-8 -12 -24 -8 q-8 2 -10 12 Z" fill="#4a3220"/>
+        <path d="M250 70 q14 -10 30 -4 q-12 -2 -20 4 q10 -1 16 2 q-16 0 -26 6 Z" fill="#4a3220"/>
+        <circle cx="264" cy="86" r="2.2" fill="#3a2a1a"/><circle cx="280" cy="86" r="2.2" fill="#3a2a1a"/>
+        <path d="M265 97 q7 5 14 0" stroke="#9c5a3c" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M249 86 a23 23 0 0 1 46 0" stroke="#0e2a18" stroke-width="5" fill="none"/>
+        <rect x="289" y="83" width="9" height="14" rx="4" fill="#0e2a18"/>
+        <path d="M294 92 q12 6 10 18" stroke="#0e2a18" stroke-width="3" fill="none"/>
+        <circle cx="304" cy="110" r="5" fill="#d63031"/>
+        <rect x="232" y="128" width="80" height="14" rx="7" fill="#f9ca24"/>
+        <text x="272" y="138" text-anchor="middle" font-family="Bebas Neue, sans-serif" font-size="10.5" letter-spacing=".5" fill="#0e2a18">JEAN-MICHEL</text>
+      </g>
+      <rect x="150" y="120" width="80" height="30" rx="6" fill="#06160d" stroke="#14502f" stroke-width="2"/>
+      <text x="190" y="140" text-anchor="middle" font-size="13">⚽</text>
+    </svg>
+  </div>
   <div class="cockpit-outer">
     <div class="cockpit-header">
       <div class="cockpit-title">📺 EN DIRECT DU TERRAIN</div>
@@ -300,6 +362,7 @@ h1 .accent{color:#0d6e3c}
         <button class="btn-save btn-teal" onclick="saveRdv()">✓ Valider</button>
       </div>
     </div>
+  </div>
   </div>
 
   <!-- BARRE BOOSTER -->
@@ -410,9 +473,9 @@ var WORKED=[1,1,1,1,1,0,0, 1,1,1,1,1,0,0, 1,1,1,1,1,0,0, 1,1,1,1,1,0,0, 1,1];
 
 /* Jours de match des Bleus (index 0-based) + lots (masqués à l'écran par 🎁) */
 var MATCHS_BLEUS=[
-  {idx:15,date:'16/06',label:'1ᵉʳ match',prize:'Paquet de tickets à gratter / personne',icon:'🎟️'},
-  {idx:21,date:'22/06',label:'2ᵉ match', prize:'Une place de ciné / personne',          icon:'🎬'},
-  {idx:25,date:'26/06',label:'3ᵉ match', prize:'Bon Amazon 50 € / collaborateur',        icon:'🛒'}
+  {idx:15,date:'16/06',label:'1ᵉʳ match',adv:'🆚 SÉNÉGAL',lieu:'New York · 21h',prize:'Paquet de tickets à gratter / personne',icon:'🎟️'},
+  {idx:21,date:'22/06',label:'2ᵉ match', adv:'🆚 IRAK',   lieu:'Philadelphie · 23h',prize:'Une place de ciné / personne',          icon:'🎬'},
+  {idx:25,date:'26/06',label:'3ᵉ match', adv:'🆚 NORVÈGE', lieu:'Boston · 21h',prize:'Bon Amazon 50 € / collaborateur',        icon:'🛒'}
 ];
 function franceMatch(i){for(var k=0;k<MATCHS_BLEUS.length;k++)if(MATCHS_BLEUS[k].idx===i)return k;return -1;}
 
@@ -591,7 +654,9 @@ function renderBleus(){
   for(var k=0;k<MATCHS_BLEUS.length;k++){
     var m=MATCHS_BLEUS[k],won=S.bonsBleus[k],dow=DAYS[new Date(YEAR,MONTH,m.idx+1).getDay()];
     var c=document.createElement('div');c.className='match-card'+(won?' won':'');
-    c.innerHTML='<div class="mc-flag">🇫🇷</div><div class="mc-date">'+dow+' '+m.date+'</div><div class="mc-label">'+m.label+'</div>'+
+    c.innerHTML='<div class="mc-flag">🇫🇷</div><div class="mc-date">'+dow+' '+m.date+'</div>'+
+      '<div class="mc-adv">'+m.adv+'</div><div class="mc-lieu">📍 '+m.lieu+'</div>'+
+      '<div class="mc-label">'+m.label+'</div>'+
       (won
         ? '<div class="mc-gift"><span class="pi">'+m.icon+'</span>'+m.prize+'</div><span class="mc-state ok">✅ Débloqué !</span>'
         : '<div class="mc-gift"><span class="pi">🎁</span>Cadeau mystère</div><span class="mc-state">🔒 À débloquer</span>');
