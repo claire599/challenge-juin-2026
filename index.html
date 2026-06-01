@@ -168,6 +168,94 @@ h1 .accent{color:#0d6e3c}
 .cx-btn{margin-top:18px;background:#f9ca24;color:#0e2a18;border:none;border-radius:50px;padding:11px 26px;font-family:'Outfit',sans-serif;font-weight:900;font-size:.9rem;cursor:pointer;position:relative;z-index:6}
 
 @media (max-width:600px){body{padding:10px}.inputs-row{grid-template-columns:1fr}.totals{grid-template-columns:repeat(2,1fr)}.sb-num{font-size:1.9rem}.sb-tname{display:none}}
+
+/* ===== VERSION PC / GRAND ÉCRAN (≥900px) — tout occupe la largeur ===== */
+@media (min-width:900px){
+  body{padding:30px 40px}
+  #app{max-width:1500px;margin:0 auto}
+  h1{font-size:4.4rem;letter-spacing:8px;margin-bottom:10px}
+  .subtitle{font-size:1.15rem;margin-bottom:8px}
+  .sync-bar{font-size:.95rem;margin-bottom:22px}
+
+  .cockpit-outer{padding:24px;border-radius:28px;margin-bottom:22px}
+  .cockpit-title{font-size:2rem;letter-spacing:3px}
+  .cockpit-date{font-size:1.1rem}
+
+  /* Scoreboard */
+  .scoreboard{margin-bottom:22px}
+  .sb-live{font-size:1.15rem;padding:14px 14px 6px;letter-spacing:2px}
+  .sb-live .live{font-size:.8rem;padding:3px 12px}
+  .sb-main{padding:8px 30px 12px;gap:20px}
+  .sb-badge{width:64px;height:64px;border-radius:14px;font-size:1.7rem}
+  .sb-tname{font-size:1rem;max-width:140px}
+  .sb-num{font-size:4.2rem}
+  .sb-sep{font-size:2.4rem}
+  .sb-stats{font-size:1.05rem;gap:26px;padding:12px 20px 18px}
+  .sb-boost{padding:4px 14px}
+
+  /* Saisie */
+  .inputs-row{gap:16px}
+  .input-section{padding:18px;border-radius:16px}
+  .input-title{font-size:1.05rem;margin-bottom:12px}
+  .input-section input{font-size:1.6rem;padding:13px}
+  .input-section .bsm{font-size:1.5rem;padding:11px 18px}
+  .btn-save{font-size:1.05rem;padding:14px;margin-top:12px}
+
+  /* Barre booster */
+  .bp{padding:24px;border-radius:24px;margin-bottom:22px}
+  .bp-icon{width:60px;height:60px;font-size:2rem}
+  .bp-title{font-size:1.6rem}
+  .bp-sub{font-size:1rem}
+  .bp-bar-lbl{font-size:.95rem}
+  .bp-track{height:36px;margin-bottom:18px}
+  .bp-track .bp-bartxt{font-size:1.1rem;line-height:36px}
+  .bp-grid{grid-template-columns:repeat(30,1fr);gap:6px;margin-bottom:16px}
+  .bpd{height:58px;border-radius:8px}
+  .bpd .num{font-size:1rem}
+  .bpd .ic{font-size:1rem}
+  .legend{font-size:.85rem;gap:16px}
+  .legend .dot{width:13px;height:13px}
+
+  /* Stats */
+  .sec{font-size:1.5rem;letter-spacing:2px;margin-bottom:14px}
+  .totals{gap:16px;margin-bottom:26px}
+  .tb{padding:20px 12px;border-radius:16px}
+  .tb .tn{font-size:2.6rem}
+  .tb .tl{font-size:.8rem}
+
+  /* Matchs des Bleus */
+  .bleus{padding:24px;border-radius:24px;margin-bottom:22px}
+  .bleus-title{font-size:1.6rem}
+  .bleus-sub{font-size:1rem;margin-bottom:18px}
+  .bleus-grid{gap:18px}
+  .match-card{padding:20px 16px;border-radius:18px}
+  .match-card .mc-flag{font-size:1.6rem}
+  .match-card .mc-date{font-size:1.5rem}
+  .match-card .mc-label{font-size:.78rem}
+  .match-card .mc-gift{font-size:1rem}
+  .match-card .mc-gift .pi{font-size:3rem}
+  .match-card .mc-state{font-size:.78rem;padding:5px 14px;margin-top:12px}
+
+  /* Trophées + boutons */
+  .trophies-bar{padding:14px 22px}
+  .tb-title{font-size:1.2rem}
+  .trophy-item{font-size:1rem;padding:6px 14px}
+  .btn-row{gap:14px;margin-bottom:28px}
+  .btn-row button{font-size:1rem;padding:13px 30px}
+
+  /* TERRAIN — occupe toute la largeur */
+  .plateau-section{padding:34px 30px 40px;border-radius:30px;margin-bottom:26px}
+  .plateau-title{font-size:2.2rem;letter-spacing:3px}
+  .plateau-sub{font-size:1.1rem;margin-bottom:22px}
+  .plateau-svg{max-width:1400px}
+  .plateau-legend{font-size:.9rem;gap:18px;margin-top:22px;padding-top:18px}
+}
+@media (min-width:1300px){
+  h1{font-size:5.2rem}
+  .sb-num{font-size:5rem}
+  .bpd{height:66px}
+  .plateau-svg{max-width:100%}
+}
 </style>
 </head>
 <body>
