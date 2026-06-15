@@ -376,8 +376,8 @@ h1 .accent{color:#0d6e3c}
     <div class="bp-track"><div class="bp-fill" id="bpFill" style="width:0%"></div><div class="bp-bartxt" id="bpBarTxt">0 / 16</div></div>
     <div class="bp-grid" id="bpGrid"></div>
     <div class="legend">
-      <span><span class="dot" style="background:#27ae60"></span>⚡ Booster (≥16)</span>
-      <span><span class="dot" style="background:#d4a017"></span>🟨 Carton jaune (&lt;16)</span>
+      <span><span class="dot" style="background:#27ae60"></span>⚡ Booster (≥16 jq. 14, ≥13 dès le 15)</span>
+      <span><span class="dot" style="background:#d4a017"></span>🟨 Carton jaune (sous le seuil)</span>
       <span><span class="dot" style="background:linear-gradient(90deg,#0055a4 33%,#fff 33% 66%,#ef4135 66%)"></span>🇫🇷 Match des Bleus</span>
       <span><span class="dot" style="background:#0e2a18"></span>Hors-match (WE)</span>
     </div>
@@ -416,8 +416,8 @@ h1 .accent{color:#0d6e3c}
     <div class="plateau-sub">1ʳᵉ mi-temps (1→15) · 2ᵉ mi-temps (16→30) · cliquer une case pour saisir</div>
     <svg class="plateau-svg" id="pitch" viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg"></svg>
     <div class="plateau-legend">
-      <span><span class="dot" style="background:#27ae60"></span>⚡ Booster (≥16 buts)</span>
-      <span><span class="dot" style="background:#d4a017"></span>🟨 Carton jaune (&lt;16)</span>
+      <span><span class="dot" style="background:#27ae60"></span>⚡ Booster (≥16, puis ≥13 dès le 15)</span>
+      <span><span class="dot" style="background:#d4a017"></span>🟨 Carton jaune (sous le seuil)</span>
       <span><span class="dot" style="background:#f9ca24"></span>⚽ Aujourd'hui</span>
       <span><span class="dot" style="background:linear-gradient(90deg,#0055a4 33%,#fff 33% 66%,#ef4135 66%)"></span>🇫🇷 Match des Bleus</span>
       <span><span class="dot" style="background:#cfe9d8"></span>À venir</span>
@@ -467,7 +467,9 @@ var SB_URL  = SB_BASE+'/rest/v1/challenges?id=eq.'+SB_ID;
 var SB_HEADERS = {'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
 
 /* ===== PARAMÈTRES JUIN ===== */
-var MONTH=5,YEAR=2026,MIN_BOOST=16,MAX_CARTONS=2;
+var MONTH=5,YEAR=2026,MAX_CARTONS=2;
+/* Seuil booster : 16 buts/jour du 1 au 14, puis 13 buts/jour du 15 au 30 */
+function minBoost(i){return i>=14?13:16;}
 var DAYS=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
 var MONTHNAME='juin';
 /* Lun-Ven travaillés, WE non. Juin 2026 commence un lundi. */
@@ -502,7 +504,7 @@ var shownTrophies=[],lastSeenEventTs=0;
 
 function todayIdx(){var t=new Date();if(t.getFullYear()===YEAR&&t.getMonth()===MONTH)return t.getDate()-1;return 11;}
 function dayLabel(dayStr){var idx=parseInt(dayStr.split('-')[2]);return DAYS[new Date(YEAR,MONTH,idx+1).getDay()]+' '+(idx+1)+' '+MONTHNAME;}
-function assess(i){var o=S.obj[i]||0,r=S.rep[i]||0,s=S.sal[i]||0,cumul=r+s;return{cumul:cumul,objOk:o>0&&cumul>=o,boostOk:s>=MIN_BOOST,o:o,r:r,s:s};}
+function assess(i){var o=S.obj[i]||0,r=S.rep[i]||0,s=S.sal[i]||0,cumul=r+s;return{cumul:cumul,objOk:o>0&&cumul>=o,boostOk:s>=minBoost(i),o:o,r:r,s:s};}
 
 /* ===== SYNC ===== */
 function sync(m,c){var b=document.getElementById('syncBar');b.textContent=m;b.style.color=c||'#00915a';}
@@ -596,7 +598,7 @@ function renderScoreboard(){
   document.getElementById('sbRdv').textContent=S.rdv[ti]!==null?S.rdv[ti]:'0';
   var chip=document.getElementById('sbBoostChip');
   if(!WORKED[ti]){chip.style.display='none';}
-  else{chip.style.display='inline-flex';document.getElementById('sbBoost').textContent=a.s+' / 16';
+  else{chip.style.display='inline-flex';document.getElementById('sbBoost').textContent=a.s+' / '+minBoost(ti);
     chip.style.background=a.boostOk?'rgba(62,224,138,.18)':'rgba(249,202,36,.14)';
     chip.style.borderColor=a.boostOk?'rgba(62,224,138,.45)':'rgba(249,202,36,.35)';}
   if(S.sal[ti]!==null)document.getElementById('iSal').value=S.sal[ti];
@@ -605,11 +607,12 @@ function renderScoreboard(){
 
 function renderBooster(){
   var ti=todayIdx(),a=assess(ti);
-  var pB=Math.min(Math.round(a.s/MIN_BOOST*100),100);
+  var mb=minBoost(ti);
+  var pB=Math.min(Math.round(a.s/mb*100),100);
   document.getElementById('bpFill').style.width=pB+'%';
   document.getElementById('bpFill').style.background=a.boostOk?'linear-gradient(90deg,#00915a,#3ee08a)':'linear-gradient(90deg,#d4a017,#f9ca24)';
-  document.getElementById('bpBarTxt').textContent=a.s+' / 16';
-  document.getElementById('bpBarLbl').textContent=a.s+' / 16';
+  document.getElementById('bpBarTxt').textContent=a.s+' / '+mb;
+  document.getElementById('bpBarLbl').textContent=a.s+' / '+mb;
   /* statuts */
   var status=[],boostDays=0,cartons=0;
   for(var i=0;i<30;i++){
@@ -755,7 +758,7 @@ function saveVentes(){
   var sal=parseInt(document.getElementById('iSal').value);
   if(isNaN(sal)||sal<0){showToast('❌ Indiquer les buts');return;}
   var prev=S.sal[ti]||0,added=sal-prev,rep=S.rep[ti]||0,obj=S.obj[ti]||0;
-  var prevCumul=prev+rep,prevBoost=prev>=MIN_BOOST,prevObj=obj>0&&prevCumul>=obj;
+  var prevCumul=prev+rep,prevBoost=prev>=minBoost(ti),prevObj=obj>0&&prevCumul>=obj;
   var todayStr=YEAR+'-'+(MONTH+1)+'-'+ti;
   S.sal[ti]=sal;
   if(!S.milestones||S.milestones.day!==ti)S.milestones={day:ti,earlyBirdDone:false,turboTr:0};
